@@ -4,13 +4,15 @@ import SEO from "../components/seo"
 import Layout from "../components/layout"
 class Page extends Component {
   render() {
-    const StaticPage = this.props.data.wordpressPage
+    const page = this.props.data.wordpressPage
+    const siteMetaData = this.props.data.site.siteMetadata
+    
     return (
       <>
         <Layout>
-          <SEO title={StaticPage.title} />
-          <h1 dangerouslySetInnerHTML={{ __html: StaticPage.title }} />
-          <div dangerouslySetInnerHTML={{ __html: StaticPage.content }} />
+          <SEO title={siteMetaData.title} />
+          <h1 dangerouslySetInnerHTML={{ __html: page.title }} />
+          <div dangerouslySetInnerHTML={{ __html: page.content }} />
         </Layout>
       </>
     )

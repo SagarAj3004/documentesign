@@ -22,12 +22,12 @@ exports.createPages = async ({ graphql, actions }) => {
   // it like the site has a built-in database constructed
   // from the fetched data that you can run queries against.
   const result = await graphql(`
-    {
-      allWordpressPage {
+  {
+    allWordpressPage {
         edges {
           node {
             id
-            path
+            slug
             status
             template
           }
@@ -37,7 +37,7 @@ exports.createPages = async ({ graphql, actions }) => {
         edges {
           node {
             id
-            path
+            slug
             status
             template
             format
@@ -46,7 +46,8 @@ exports.createPages = async ({ graphql, actions }) => {
       }
     }
   `)
-
+  console.log('result', JSON.stringify(result));
+  
   // Check for any errors
   if (result.errors) {
     throw new Error(result.errors)
@@ -70,7 +71,7 @@ exports.createPages = async ({ graphql, actions }) => {
       // as a template component. The `context` is
       // optional but is often necessary so the template
       // can query data specific to each page.
-      path: edge.node.path,
+      path: edge.node.slug,
       component: slash(pageTemplate),
       context: {
         id: edge.node.id,
@@ -85,7 +86,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // The Post ID is prefixed with 'POST_'
   allWordpressPost.edges.forEach(edge => {
     createPage({
-      path: edge.node.path,
+      path: `/posts/${edge.node.slug}`,
       component: slash(postTemplate),
       context: {
         id: edge.node.id,

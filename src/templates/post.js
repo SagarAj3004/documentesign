@@ -6,11 +6,12 @@ import Layout from "../components/layout"
 class Post extends Component {
   render() {
     const post = this.props.data.wordpressPost
+    const siteMetaData = this.props.data.site.siteMetadata
 
     return (
       <>
         <Layout>
-          <SEO title={post.title} />
+          <SEO title={siteMetaData.title} />
           <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
         </Layout>
