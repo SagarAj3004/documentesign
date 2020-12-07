@@ -57,7 +57,7 @@ module.exports = {
       resolve: `gatsby-source-wordpress`,
       options: {
         /*
-         * The base URL of the WordPress site without the trailingslash and the protocol. This is required.
+         * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
          * Example : 'demo.wp-api.org' or 'www.example-site.com'
          */
         baseUrl: `devster497241213.wordpress.com`,

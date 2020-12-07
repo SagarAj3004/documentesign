@@ -1,5 +1,5 @@
 import React, { Component } from "react"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import PropTypes from "prop-types"
 import SEO from "../components/seo"
 import Layout from "../components/layout"
@@ -14,6 +14,7 @@ class Post extends Component {
           <SEO title={siteMetaData.title} />
           <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
           <div dangerouslySetInnerHTML={{ __html: post.content }} />
+          <Link to="/posts">Back</Link>
         </Layout>
       </>
     )

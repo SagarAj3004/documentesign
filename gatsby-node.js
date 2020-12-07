@@ -7,6 +7,7 @@
 // You can delete this file if you're not using it
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
+const queries = require("./src/queries/queries")
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -21,32 +22,7 @@ exports.createPages = async ({ graphql, actions }) => {
   // queries against the local Gatsby GraphQL schema. Think of
   // it like the site has a built-in database constructed
   // from the fetched data that you can run queries against.
-  const result = await graphql(`
-  {
-    allWordpressPage {
-        edges {
-          node {
-            id
-            slug
-            status
-            template
-          }
-        }
-      }
-      allWordpressPost {
-        edges {
-          node {
-            id
-            slug
-            status
-            template
-            format
-          }
-        }
-      }
-    }
-  `)
-  console.log('result', JSON.stringify(result));
+  const result = await graphql(queries)
   
   // Check for any errors
   if (result.errors) {
@@ -80,11 +56,21 @@ exports.createPages = async ({ graphql, actions }) => {
   })
 
   const postTemplate = path.resolve(`./src/templates/post.js`)
+  const postsTemplate = path.resolve(`./src/pages/posts/index.js`)
   // We want to create a detailed page for each post node.
   // The path field stems from the original WordPress link
   // and we use it for the slug to preserve url structure.
   // The Post ID is prefixed with 'POST_'
+
+  // Create list of posts
+  createPage({
+    path: `/posts/`,
+    component: slash(postsTemplate)
+  })
+
   allWordpressPost.edges.forEach(edge => {
+
+    // Create page for each post
     createPage({
       path: `/posts/${edge.node.slug}`,
       component: slash(postTemplate),
