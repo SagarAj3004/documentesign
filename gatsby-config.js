@@ -53,25 +53,36 @@ module.exports = {
     //     },
     //   },
     // },
+    // {
+    //   resolve: `gatsby-source-wordpress`,
+    //   options: {
+    //     /*
+    //      * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
+    //      * Example : 'demo.wp-api.org' or 'www.example-site.com'
+    //      */
+    //     baseUrl: `devster497241213.wordpress.com`,
+    //     // The protocol. This can be http or https.
+    //     protocol: `https`,
+    //     // Indicates whether the site is hosted on wordpress.com.
+    //     // If false, then the assumption is made that the site is self hosted.
+    //     // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
+    //     // If your site is hosted on wordpress.org, then set this to false.
+    //     hostingWPCOM: true,
+    //     // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
+    //     // This feature is untested for sites hosted on WordPress.com
+    //     useACF: false,
+    //     includedRoutes: ["**/posts", "**/pages"],
+    //   },
+    // },
     {
-      resolve: `gatsby-source-wordpress`,
+      resolve: `gatsby-source-strapi`,
       options: {
-        /*
-         * The base URL of the WordPress site without the trailing slash and the protocol. This is required.
-         * Example : 'demo.wp-api.org' or 'www.example-site.com'
-         */
-        baseUrl: `devster497241213.wordpress.com`,
-        // The protocol. This can be http or https.
-        protocol: `https`,
-        // Indicates whether the site is hosted on wordpress.com.
-        // If false, then the assumption is made that the site is self hosted.
-        // If true, then the plugin will source its content on wordpress.com using the JSON REST API V2.
-        // If your site is hosted on wordpress.org, then set this to false.
-        hostingWPCOM: true,
-        // If useACF is true, then the source plugin will try to import the WordPress ACF Plugin contents.
-        // This feature is untested for sites hosted on WordPress.com
-        useACF: false,
-        includedRoutes: ["**/posts", "**/pages"],
+        apiURL: `http://localhost:1337`,
+        queryLimit: 1000, // Default to 100
+        contentTypes: [`features`,`blogs`],
+        //If using single types place them in this array.
+        // singleTypes: [`home-page`, `contact`],
+        // Possibility to login with a strapi user, when content types are not publically available (optional). 
       },
     },
     // this (optional) plugin enables Progressive Web App + Offline functionality

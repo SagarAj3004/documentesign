@@ -1,44 +1,44 @@
-import React, { Component } from "react"
-import { graphql, Link } from "gatsby"
-import PropTypes from "prop-types"
-import SEO from "../components/seo"
-import Layout from "../components/layout"
-class Post extends Component {
-  render() {
-    const post = this.props.data.wordpressPost
-    const siteMetaData = this.props.data.site.siteMetadata
+// import React, { Component } from "react"
+// import { graphql, Link } from "gatsby"
+// import PropTypes from "prop-types"
+// import SEO from "../components/seo"
+// import Layout from "../components/layout"
+// class Post extends Component {
+//   render() {
+//     const post = this.props.data.wordpressPost
+//     const siteMetaData = this.props.data.site.siteMetadata
 
-    return (
-      <>
-        <Layout>
-          <SEO title={siteMetaData.title} />
-          <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
-          <div dangerouslySetInnerHTML={{ __html: post.content }} />
-          <Link to="/posts">Back</Link>
-        </Layout>
-      </>
-    )
-  }
-}
+//     return (
+//       <>
+//         <Layout>
+//           <SEO title={siteMetaData.title} />
+//           <h1 dangerouslySetInnerHTML={{ __html: post.title }} />
+//           <div dangerouslySetInnerHTML={{ __html: post.content }} />
+//           <Link to="/posts">Back</Link>
+//         </Layout>
+//       </>
+//     )
+//   }
+// }
 
-Post.propTypes = {
-  data: PropTypes.object.isRequired,
-  edges: PropTypes.array,
-}
+// Post.propTypes = {
+//   data: PropTypes.object.isRequired,
+//   edges: PropTypes.array,
+// }
 
-export default Post
+// export default Post
 
-export const postQuery = graphql`
-  query($id: String!) {
-    wordpressPost(id: { eq: $id }) {
-      title
-      content
-    }
-    site {
-      siteMetadata {
-        title
-        description
-      }
-    }
-  }
-`
+// export const postQuery = graphql`
+//   query($id: String!) {
+//     wordpressPost(id: { eq: $id }) {
+//       title
+//       content
+//     }
+//     site {
+//       siteMetadata {
+//         title
+//         description
+//       }
+//     }
+//   }
+// `

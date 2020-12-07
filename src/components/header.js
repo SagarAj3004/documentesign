@@ -1,3 +1,4 @@
+import { Link } from "gatsby"
 import PropTypes from "prop-types"
 import React from "react"
 import Logo from "../components/logo"
@@ -27,9 +28,50 @@ const Header = ({ siteTitle }) => (
       style={{ backgroundColor: "#1A2B3A" }}
     >
       <div className="container">
-        <a className="navbar-brand" href="index.html">
+        <Link
+          to="/"
+          className="navbar-brand"
+          style={{
+            textDecoration: `none`,
+          }}
+        >
           <Logo />
-        </a>
+        </Link>
+        <ul className="navbar-nav ml-auto">
+          <li className="nav-item active">
+            <Link
+              to="/"
+              className="nav-link text-light"
+              style={{
+                textDecoration: `none`,
+              }}
+            >
+              Home
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/features"
+              className="nav-link text-light"
+              style={{
+                textDecoration: `none`,
+              }}
+            >
+              Features
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/blogs"
+              className="nav-link text-light"
+              style={{
+                textDecoration: `none`,
+              }}
+            >
+              Blogs
+            </Link>
+          </li>
+        </ul>
       </div>
     </nav>
   </header>
