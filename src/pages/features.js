@@ -6,31 +6,35 @@ import SEO from "../components/seo"
 
 const query = graphql`
   {
-    allStrapiFeatures {
-      nodes {
+    strapiFeature {
+      feature {
+        id
         title
         subtitle
+        image {
+          publicURL
+        }
         description
-        strapiId
       }
+      strapiId
     }
   }
 `
 const Features = () => {
   const data = useStaticQuery(query)
   const {
-    allStrapiFeatures: { nodes: features },
+    strapiFeature: { feature: features },
   } = data
   return (
     <>
       <Layout>
-        <SEO title="Features" />
+        <SEO title="Features" description="this is features page"/>
         <div className="mt-4">
           <div className="d-flex">
             <h2 className="mx-auto">Features</h2>
           </div>
-          {features.map(feature => {
-            return <Feature key={feature.strapiId} feature={feature} />
+          {features.map((feature, index) => {
+            return <Feature key={feature.id} {...feature} />
           })}
         </div>
       </Layout>

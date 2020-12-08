@@ -8,14 +8,16 @@ const query = graphql`
   {
     allStrapiBlogs {
       nodes {
+        id
         title
+        slug
         content
         category
         image {
-          absolutePath
+          publicURL
         }
         description
-        date
+        date(formatString: "MMMM Do, YYYY")
         strapiId
       }
     }
@@ -29,17 +31,14 @@ const Blogs = () => {
   return (
     <>
       <Layout>
-        <SEO title="Blogs" />
+        <SEO title="Blogs"  description="this is blogs page"/>
         <div className="mt-4">
           <div className="d-flex">
             <h2 className="mx-auto">Blogs</h2>
           </div>
-
-          <div class="d-flex">
-            {blogs.map(blog => {
-              return <Blog key={blog.strapiId} blog={blog} />
-            })}
-          </div>
+          {blogs.map(blog => {
+            return <Blog key={blog.strapiId} {...blog} />
+          })}
         </div>
       </Layout>
     </>

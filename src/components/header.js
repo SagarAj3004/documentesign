@@ -71,6 +71,28 @@ const Header = ({ siteTitle }) => (
               Blogs
             </Link>
           </li>
+          <li className="nav-item">
+            <Link
+              to="/about"
+              className="nav-link text-light"
+              style={{
+                textDecoration: `none`,
+              }}
+            >
+              About
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
+              to="/contact"
+              className="nav-link text-light"
+              style={{
+                textDecoration: `none`,
+              }}
+            >
+              Contact us
+            </Link>
+          </li>
         </ul>
       </div>
     </nav>

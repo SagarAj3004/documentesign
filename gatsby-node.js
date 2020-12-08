@@ -7,7 +7,7 @@
 // You can delete this file if you're not using it
 const path = require(`path`)
 const { slash } = require(`gatsby-core-utils`)
-const queries = require("./src/queries/queries")
+// const queries = require("./src/queries/queries")
 
 // Implement the Gatsby API “createPages”. This is
 // called after the Gatsby bootstrap is finished so you have
@@ -23,7 +23,7 @@ const queries = require("./src/queries/queries")
 //   // it like the site has a built-in database constructed
 //   // from the fetched data that you can run queries against.
 //   const result = await graphql(queries)
-  
+
 //   // Check for any errors
 //   if (result.errors) {
 //     throw new Error(result.errors)
@@ -80,3 +80,50 @@ const queries = require("./src/queries/queries")
 //     })
 //   })
 // }
+
+/**
+ * strapi
+ */
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+
+  // The “graphql” function allows us to run arbitrary
+  // queries against the local Gatsby GraphQL schema. Think of
+  // it like the site has a built-in database constructed
+  // from the fetched data that you can run queries against.
+  const result = await graphql(
+    `
+      {
+        blogs: allStrapiBlogs {
+          nodes {
+            slug
+          }
+        }
+      }
+    `
+  )
+
+  // Check for any errors
+  if (result.errors) {
+    throw new Error(result.errors)
+  }
+
+  // Access query results via object destructuring
+  const { blogs } = result.data
+
+  const blogTemplate = path.resolve(`./src/templates/blog-template.js`)
+
+  blogs.nodes.forEach(blog => {
+    createPage({
+      // Each page is required to have a `path` as well
+      // as a template component. The `context` is
+      // optional but is often necessary so the template
+      // can query data specific to each page.
+      path: `/blogs/${blog.slug}`,
+      component: slash(blogTemplate),
+      context: {
+        slug: blog.slug,
+      },
+    })
+  })
+}
