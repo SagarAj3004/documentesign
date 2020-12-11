@@ -1,25 +1,33 @@
 import React from "react"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
+import axios from "axios"
 export default class Contact extends React.Component {
   state = {
     name: "",
     email: "",
     message: "",
+    errors: {
+      name: "",
+      email: "",
+    },
   }
+
   handleInputChange = event => {
-    const target = event.target
-    const value = target.value
-    const name = target.name
-    this.setState({
-      [name]: value,
-    })
+    const { name, value } = event.target
+    this.setState({ [name]: value }, () => {})
   }
+
   handleSubmit = event => {
     event.preventDefault()
-    alert(
-      `Welcome ${this.state.name} ${this.state.email} ${this.state.message}!`
-    )
+    if (!this.validateForm()) {
+      return
+    }
+    axios
+      .post(`http://localhost:1337/contacts`, { ...this.state })
+      .then(response => {
+        console.log("response", response)
+      })
   }
   render() {
     return (
@@ -55,8 +63,11 @@ export default class Contact extends React.Component {
                   name="name"
                   value={this.state.name}
                   onChange={this.handleInputChange}
-                  className="form-control mb-4"
+                  className="form-control"
                 />
+                <span className="invalid-feedback d-block">
+                  {this.state.errors.name}
+                </span>
               </div>
               <div className="form-group">
                 <label htmlFor="emailInput">
@@ -68,8 +79,11 @@ export default class Contact extends React.Component {
                   name="email"
                   value={this.state.email}
                   onChange={this.handleInputChange}
-                  className="form-control mb-4"
+                  className="form-control"
                 />
+                <span className="invalid-feedback d-block">
+                  {this.state.errors.email}
+                </span>
               </div>
               <div className="form-group">
                 <label htmlFor="messageInput">
@@ -81,7 +95,7 @@ export default class Contact extends React.Component {
                   name="message"
                   value={this.state.message}
                   onChange={this.handleInputChange}
-                  className="form-control mb-4"
+                  className="form-control"
                 ></textarea>
               </div>
               <button type="submit" className="btn btn-primary float-right">
@@ -92,5 +106,32 @@ export default class Contact extends React.Component {
         </div>
       </Layout>
     )
+  }
+
+  validateForm = () => {
+    let valid = true
+    let errors = this.state.errors
+    Object.keys(this.state).forEach(field => {
+      switch (field) {
+        case "name":
+          errors.name =
+            this.state.name.trim().length === 0 ? "Name is required" : ""
+          break
+        case "email":
+          errors.email =
+            this.state.email.trim().length === 0
+              ? "Email is required"
+              : !/^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+                  this.state.email
+                )
+              ? "Email is invalid"
+              : ""
+          break
+        default:
+      }
+    })
+    valid = !errors.name.length && !errors.email.length
+    this.setState({ errors }, () => {})
+    return valid
   }
 }

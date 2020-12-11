@@ -91,17 +91,20 @@ exports.createPages = async ({ graphql, actions }) => {
   // queries against the local Gatsby GraphQL schema. Think of
   // it like the site has a built-in database constructed
   // from the fetched data that you can run queries against.
-  const result = await graphql(
-    `
-      {
-        blogs: allStrapiBlogs {
-          nodes {
-            slug
-          }
+  const result = await graphql(`
+    {
+      allStrapiBlogs {
+        nodes {
+          slug
         }
       }
-    `
-  )
+      allContentfulBlog {
+        nodes {
+          slug
+        }
+      }
+    }
+  `)
 
   // Check for any errors
   if (result.errors) {
@@ -109,11 +112,15 @@ exports.createPages = async ({ graphql, actions }) => {
   }
 
   // Access query results via object destructuring
-  const { blogs } = result.data
+  const { allStrapiBlogs, allContentfulBlog } = result.data
 
   const blogTemplate = path.resolve(`./src/templates/blog-template.js`)
 
-  blogs.nodes.forEach(blog => {
+  const blogContentfulTemplate = path.resolve(
+    `./src/templates/blog-contentful-template.js`
+  )
+
+  allStrapiBlogs.nodes.forEach(blog => {
     createPage({
       // Each page is required to have a `path` as well
       // as a template component. The `context` is
@@ -121,6 +128,20 @@ exports.createPages = async ({ graphql, actions }) => {
       // can query data specific to each page.
       path: `/blogs/${blog.slug}`,
       component: slash(blogTemplate),
+      context: {
+        slug: blog.slug,
+      },
+    })
+  })
+
+  allContentfulBlog.nodes.forEach((blog, index) => {
+    createPage({
+      // Each page is required to have a `path` as well
+      // as a template component. The `context` is
+      // optional but is often necessary so the template
+      // can query data specific to each page.
+      path: `/contentful/${blog.slug}`,
+      component: slash(blogContentfulTemplate),
       context: {
         slug: blog.slug,
       },

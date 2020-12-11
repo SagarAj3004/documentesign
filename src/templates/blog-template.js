@@ -3,9 +3,9 @@ import { graphql, Link } from "gatsby"
 import Layout from "../components/layout"
 import SEO from "../components/seo"
 import ReactMarkdown from "react-markdown"
-const ComponentName = ({ data }) => {
-  const { content, title, description } = data.blog
-  console.log('description', description);
+const BlogTemplate = ({ data }) => {
+  const { content, title, description } = data.strapiBlogs
+
   return (
     <Layout>
       <SEO title={title} description={description} />
@@ -23,11 +23,11 @@ const ComponentName = ({ data }) => {
   )
 }
 
-export default ComponentName
+export default BlogTemplate
 
 export const query = graphql`
   query GetSingleBlog($slug: String) {
-    blog: strapiBlogs(slug: { eq: $slug }) {
+    strapiBlogs(slug: { eq: $slug }) {
       slug
       title
       description

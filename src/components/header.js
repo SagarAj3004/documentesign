@@ -73,6 +73,17 @@ const Header = ({ siteTitle }) => (
           </li>
           <li className="nav-item">
             <Link
+              to="/contentful"
+              className="nav-link text-light"
+              style={{
+                textDecoration: `none`,
+              }}
+            >
+              Contentful
+            </Link>
+          </li>
+          <li className="nav-item">
+            <Link
               to="/about"
               className="nav-link text-light"
               style={{

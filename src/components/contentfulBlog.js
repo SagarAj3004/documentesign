@@ -1,27 +1,20 @@
 import { Link } from "gatsby"
 import React from "react"
-const Blog = ({ id, title, image, category, description, slug, date }) => {
+import ReactMarkdown from "react-markdown"
+const ContentfulBlog = ({ id, title, description, slug, date }) => {
   return (
     <>
       <div className="row mb-3">
         <div className="col-12">
           <div className="card p-3 shadow">
             <div className="card-title">
-              <Link to={`/blogs/${slug}`} key={id}>
+              <Link to={`/contentful/${slug}`} key={id}>
                 <h3>{title}</h3>
-                {image && image.publicURL && (
-                  <img src={image.publicURL} height="200" alt={id} />
-                )}
               </Link>
             </div>
             <div className="card-body p-0">
               <div>
-                <p>{description}</p>
-              </div>
-              <div>
-                <span className="badge badge-secondary">
-                  {category?.toUpperCase()}
-                </span>
+                <ReactMarkdown source={description.description}></ReactMarkdown>
               </div>
               <small className="text-muted">{date}</small>
             </div>
@@ -32,4 +25,4 @@ const Blog = ({ id, title, image, category, description, slug, date }) => {
   )
 }
 
-export default Blog
+export default ContentfulBlog
